@@ -1,56 +1,51 @@
-@app.route('/submit', methods=['POST'])
-def submit():
-    message = request.form['message']
-    # 사용자가 입력한 메시지를 그대로 출력 (XSS 취약점)
-    return render_template_string(f'''
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Message Submitted</title>
-        <style>
-            body {{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background-color: #f0f0f0;
-            }}
-            .container {{
-                text-align: center;
-                background-color: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }}
-            p {{
-                word-wrap: break-word;
-                max-width: 300px;
-                margin: 0 auto;
-            }}
-            a {{
-                display: inline-block;
-                margin-top: 20px;
-                padding: 10px 20px;
-                border-radius: 4px;
-                background-color: #007BFF;
-                color: white;
-                text-decoration: none;
-            }}
-            a:hover {{
-                background-color: #0056b3;
-            }}
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Message Submitted</h1>
-            <p>{message}</p>
-            <a href="/">Go back</a>
-        </div>
-    </body>
-    </html>
-    ''')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Submitted</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            word-wrap: break-word;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Message Submitted</h1>
+        <!-- 이 부분에서 XSS 공격이 가능함 -->
+        <p>{{ message|safe }}</p>
+        <a href="/">Go back</a>
+    </div>
+</body>
+</html>
