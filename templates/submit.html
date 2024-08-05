@@ -43,7 +43,6 @@
 <body>
     <div class="container">
         <h1>Message Submitted</h1>
-        <!-- 이 부분에서 XSS 공격이 가능함 -->
         <p>{{ message|safe }}</p>
         <a href="/">Go back</a>
     </div>
